@@ -1,14 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  Container,
-  Header,
-  Form,
-  Input,
-  TextArea,
-  Divider,
-  Button,
-} from "semantic-ui-react";
 
 const CreateNote = () => {
   const [title, setTitle] = useState("");
@@ -22,26 +13,31 @@ const CreateNote = () => {
   };
 
   return (
-    <Container>
-      <Form onSubmit={onSubmit}>
-        <Header as="h2">Create new note</Header>
-        <Button content="Save Note" color="green" floated="right" />
+    <div className="w-full  ">
+      <h2 className="text-4xl px-2 py-2">Create new note</h2>
+      <div className="flex justify-center h-4/5 w-full ">
+        <form onSubmit={onSubmit} className="w-2/3">
+          <div className="flex justify-end my-2">
+            <button className="border bg-green-400 px-2 shadow-lg">
+              Save Note
+            </button>
+          </div>
 
-        <Form.Field>
-          <Divider hidden />
-          <Input
+          <input
             placeholder="Title"
             onChange={(e) => setTitle(e.target.value)}
+            className="border shadow-lg w-full py-2 px-2 focus:outline-none"
           />
-          <Divider hidden />
-          <TextArea
+
+          <textarea
             placeholder="Note"
-            rows={40}
+            rows="30"
             onChange={(e) => setContent(e.target.value)}
+            className="w-full shadow-lg border my-2 py-2 px-2 focus:outline-none"
           />
-        </Form.Field>
-      </Form>
-    </Container>
+        </form>
+      </div>
+    </div>
   );
 };
 

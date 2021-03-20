@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Container, Header, Grid, Card, Divider } from "semantic-ui-react";
+import React, { useState, useEffect, Fragment } from "react";
+
 import axios from "axios";
 import CardComponent from "../../components/CardComponent";
 
@@ -11,8 +11,6 @@ const AllNotes = () => {
     setNotes(...notes, data);
   };
 
-  console.log(notes);
-
   useEffect(() => {
     getNotes();
   }, []);
@@ -21,22 +19,24 @@ const AllNotes = () => {
     return <h1>No notes found</h1>;
   }
   return (
-    <Container>
-      <Header as="h2">All Notes</Header>
-      <Divider hidden />
-      <Grid container>
-        <Card.Group>
+    <Fragment>
+      <h2 className="text-4xl my-4">All Notes</h2>
+
+      <div className="flex justify-center">
+        <ul className="grid grid-flow-col auto-rows-auto gap-4">
           {notes.map((note) => (
-            <CardComponent
-              title={note.title}
-              content={note.content}
-              _id={note._id}
-              key={note._id}
-            />
+            <li className="">
+              <CardComponent
+                title={note.title}
+                content={note.content}
+                id={note._id}
+                key={note._id}
+              />
+            </li>
           ))}
-        </Card.Group>
-      </Grid>
-    </Container>
+        </ul>
+      </div>
+    </Fragment>
   );
 };
 

@@ -1,19 +1,18 @@
-import { List } from "semantic-ui-react";
 import Link from "next/link";
 
 const Header = () => {
   return (
-    <List horizontal floated="right" link>
-      <List.Item active>
+    <ul className="flex justify-end">
+      <li className="mx-2 my-2">
         <Link href="/CreateNote">Create New Note</Link>
-      </List.Item>
-      <List.Item active>
+      </li>
+      <li className="mx-2 my-2">
         <Link href="/Notes">All Notes</Link>
-      </List.Item>
-      <List.Item active>
+      </li>
+      <li className="mx-2 my-2">
         <Link href="/">Login</Link>
-      </List.Item>
-    </List>
+      </li>
+    </ul>
   );
 };
 
