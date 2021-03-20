@@ -1,27 +1,32 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+
 const NoteId = () => {
   const router = useRouter();
   const { noteId } = router.query;
-  const { asPath } = router;
-  const [note, setNote] = useState();
 
-  const getNote = async () => {
+  const [noteDetail, setNoteDetail] = useState();
+
+  const getNoteDetail = async () => {
     const { data } = await axios.get(
       `http://localhost:5000/api/notes/${noteId}}`
     );
-    setNote(data);
+    setNoteDetail(data);
   };
 
-  console.log(noteId);
-  console.log(note);
-  console.log(router);
   useEffect(() => {
-    getNote();
+    getNoteDetail();
   }, []);
 
-  return <div>{/* <div> {note.title}</div> <div>{note.content}</div> */}</div>;
+  console.log(noteId);
+  console.log(noteDetail);
+
+  return (
+    <div>
+      <h1>Note detail</h1>
+    </div>
+  );
 };
 
 export default NoteId;

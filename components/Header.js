@@ -1,6 +1,6 @@
-import React from "react";
-import { List, Divider } from "semantic-ui-react";
+import { List } from "semantic-ui-react";
 import Link from "next/link";
+
 const Header = () => {
   return (
     <List horizontal floated="right" link>
