@@ -23,7 +23,7 @@ const AllNotes = () => {
       <h2 className="text-4xl my-4">All Notes</h2>
 
       <div className="flex justify-center">
-        <ul className="grid grid-flow-col auto-rows-auto gap-4">
+        <ul className="grid grid-flow-col auto-rows-auto">
           {notes.map((note) => (
             <li className="">
               <CardComponent
