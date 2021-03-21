@@ -28,7 +28,6 @@ const NoteId = () => {
     try {
       await axios.delete(`http://localhost:5000/api/notes/${noteId}`);
       router.push("/Notes");
-      console.log(noteId);
     } catch (err) {
       console.log(err);
     }
@@ -36,14 +35,15 @@ const NoteId = () => {
 
   const onEdit = () => {
     setIsEditing(true);
-    setNewTitle(noteDetail.title);
-    setNewContent(noteDetail.content);
+    setTitle(noteDetail.title);
+    setContent(noteDetail.content);
   };
 
   const onUpdate = async () => {
     const updatedNote = { title, content };
-    console.log(updatedNote);
     await axios.put(`http://localhost:5000/api/notes/${noteId}`, updatedNote);
+    setIsEditing(false);
+    getNoteDetail();
   };
 
   if (!noteDetail) {
@@ -81,20 +81,22 @@ const NoteId = () => {
         </div>
       </div>
       <div>
-        <div className="flex justify-end ">
-          <button
-            onClick={onUpdate}
-            className="px-2 border shadow-lg bg-green-400"
-          >
-            UPDATE
-          </button>
-        </div>
         {isEditing ? (
-          <textarea
-            className="shadow-lg border my-2 py-2 px-2 w-full h-screen"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
+          <div>
+            <div className="flex justify-end ">
+              <button
+                onClick={onUpdate}
+                className="px-2 border shadow-lg bg-green-400 focus:outline-none"
+              >
+                UPDATE
+              </button>
+            </div>
+            <textarea
+              className="shadow-lg border my-2 py-2 px-2 w-full h-screen"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+          </div>
         ) : (
           <p className="shadow-lg border my-2 py-2 px-2">
             {noteDetail.content}
