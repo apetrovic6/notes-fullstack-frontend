@@ -13,7 +13,7 @@ const CreateNote = () => {
   };
 
   return (
-    <div className="w-full  ">
+    <div className="w-screen  ">
       <h2 className="text-4xl px-2 py-2">Create new note</h2>
       <div className="flex justify-center h-4/5 w-full ">
         <form onSubmit={onSubmit} className="w-2/3">

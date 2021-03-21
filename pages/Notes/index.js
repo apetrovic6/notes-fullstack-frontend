@@ -19,13 +19,13 @@ const AllNotes = () => {
     return <h1>No notes found</h1>;
   }
   return (
-    <Fragment>
+    <div className="mx-18">
       <h2 className="text-4xl my-4">All Notes</h2>
 
       <div className="flex justify-center">
-        <ul className="grid grid-flow-col auto-rows-auto">
+        <ul className="grid grid-cols-5 auto-rows-auto">
           {notes.map((note) => (
-            <li className="">
+            <li key={note._id} className="mx-2 my-2">
               <CardComponent
                 title={note.title}
                 content={note.content}
@@ -36,7 +36,7 @@ const AllNotes = () => {
           ))}
         </ul>
       </div>
-    </Fragment>
+    </div>
   );
 };
 
