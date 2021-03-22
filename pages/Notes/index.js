@@ -1,17 +1,36 @@
-import React, { useState, useEffect, Fragment } from "react";
-
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
 import CardComponent from "../../components/CardComponent";
 
 const AllNotes = () => {
+  let user;
   const [notes, setNotes] = useState([]);
 
   const getNotes = async () => {
-    const { data } = await axios.get("http://localhost:5000/api/notes");
-    setNotes(...notes, data);
+    try {
+      const { data } = await axios.get("http://localhost:5000/api/notes/", {
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+        params: {
+          author: user._id,
+        },
+      });
+      setNotes(...notes, data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getUserDetail = async () => {
+    const jwt = localStorage.getItem("token");
+    user = jwtDecode(jwt);
+    console.log(user);
   };
 
   useEffect(() => {
+    getUserDetail();
     getNotes();
   }, []);
 

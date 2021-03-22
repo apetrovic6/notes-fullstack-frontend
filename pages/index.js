@@ -1,16 +1,28 @@
 import { useState } from "react";
 import Link from "next/link";
+import axios from "axios";
 const Login = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
 
-  const login = async () => {
-    await axios;
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const userLogin = {
+      username,
+      password,
+    };
+    try {
+      const { data: jwt } = await axios.post(
+        "http://localhost:5000/api/auth/",
+        userLogin
+      );
+      console.log(jwt);
+      localStorage.setItem("token", jwt);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
   return (
     <div>
       <h1 className="text-4xl">Login</h1>
@@ -22,10 +34,13 @@ const Login = () => {
 
           <div className="my-2">
             <div className="mb-2">
-              <label className="text-2xl mx-2">Username</label>
+              <label htmlFor="username" className="text-2xl mx-2">
+                Username
+              </label>
             </div>
             <div>
               <input
+                id="username"
                 className="border px-2 mx-2 w-full"
                 placeholder="Username"
                 onChange={(e) => setUsername(e.target.value)}
@@ -34,13 +49,17 @@ const Login = () => {
           </div>
           <div>
             <div className="mb-2">
-              <label className="text-2xl mx-2">Password</label>
+              <label htmlFor="password" className="text-2xl mx-2">
+                Password
+              </label>
             </div>
             <div>
               <input
+                id="password"
                 className="border px-2 mx-2 w-full"
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
+                type="password"
               />
             </div>
           </div>
