@@ -1,17 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
-
+import { UserContext } from "../context/UserContext";
 const CreateNote = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
+  const {
+    value: { userId },
+  } = useContext(UserContext);
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const newNote = { title, content };
-    axios.post("http://localhost:5000/api/notes/create", newNote);
+    const newNote = { title, content, userId };
+    try {
+      axios({
+        method: "post",
+        url: "http://localhost:5000/api/notes/create",
+        data: newNote,
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
-
+  console.log("From create note page", userId);
   return (
     <div className="w-screen  ">
       <h2 className="text-4xl px-2 py-2">Create new note</h2>

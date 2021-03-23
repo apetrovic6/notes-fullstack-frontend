@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import jwtDecode from "jwt-decode";
+
+import { UserContext } from "../../context/UserContext";
 import CardComponent from "../../components/CardComponent";
 
 const AllNotes = () => {
   let user;
   const [notes, setNotes] = useState([]);
+  const {
+    value: { userId },
+  } = useContext(UserContext);
 
   const getNotes = async () => {
     try {
@@ -14,27 +18,21 @@ const AllNotes = () => {
           "x-auth-token": localStorage.getItem("token"),
         },
         params: {
-          author: user._id,
+          userId,
         },
       });
+
       setNotes(...notes, data);
     } catch (err) {
       console.log(err);
     }
   };
-
-  const getUserDetail = async () => {
-    const jwt = localStorage.getItem("token");
-    user = jwtDecode(jwt);
-    console.log(user);
-  };
-
+  console.log("user id", userId);
   useEffect(() => {
-    getUserDetail();
     getNotes();
   }, []);
-
-  if (!notes.length === 0) {
+  console.log("data", notes);
+  if (notes.length == 0) {
     return <h1>No notes found</h1>;
   }
   return (

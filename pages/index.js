@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import axios from "axios";
+
+import { UserContext } from "../context/UserContext";
+import jwtDecode from "jwt-decode";
 const Login = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-
+  const { value, setValue } = useContext(UserContext);
+  const router = useRouter();
   const onSubmit = async (e) => {
     e.preventDefault();
     const userLogin = {
@@ -12,17 +17,28 @@ const Login = () => {
       password,
     };
     try {
-      const { data: jwt } = await axios.post(
+      const response = await axios.post(
         "http://localhost:5000/api/auth/",
         userLogin
       );
-      console.log(jwt);
+      const {
+        data: jwt,
+        config: { data: user },
+      } = response;
+
+      const decodedJwt = jwtDecode(jwt);
+      const username = JSON.parse(user);
+
+      setValue({ userName: username.username, userId: decodedJwt._id });
+
       localStorage.setItem("token", jwt);
+
+      router.push("/Notes");
     } catch (err) {
       console.log(err);
     }
   };
-
+  console.log(value);
   return (
     <div>
       <h1 className="text-4xl">Login</h1>

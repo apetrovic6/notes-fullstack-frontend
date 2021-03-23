@@ -10,6 +10,7 @@ const NoteId = () => {
 
   const [noteDetail, setNoteDetail] = useState();
   const [isEditing, setIsEditing] = useState(false);
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
