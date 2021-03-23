@@ -2,43 +2,47 @@ import { useState, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
-
 import { UserContext } from "../context/UserContext";
+import Login from "../utils/Login";
 import jwtDecode from "jwt-decode";
-const Login = () => {
+const Signin = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const { value, setValue } = useContext(UserContext);
   const router = useRouter();
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const userLogin = {
       username,
       password,
     };
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/",
-        userLogin
-      );
-      const {
-        data: jwt,
-        config: { data: user },
-      } = response;
+    Login(userLogin, setValue);
 
-      const decodedJwt = jwtDecode(jwt);
-      const username = JSON.parse(user);
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:5000/api/auth/",
+    //     userLogin
+    //   );
+    //   const {
+    //     data: jwt,
+    //     config: { data: user },
+    //   } = response;
 
-      setValue({ userName: username.username, userId: decodedJwt._id });
+    //   const decodedJwt = jwtDecode(jwt);
+    //   const username = JSON.parse(user);
 
-      localStorage.setItem("token", jwt);
+    //   setValue({ userName: username.username, userId: decodedJwt._id });
 
-      router.push("/Notes");
-    } catch (err) {
-      console.log(err);
-    }
+    //   localStorage.setItem("token", jwt);
+
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
-  console.log(value);
+  if (value.userId) {
+    router.replace("/Notes");
+  }
   return (
     <div>
       <h1 className="text-4xl">Login</h1>
@@ -85,7 +89,7 @@ const Login = () => {
             </button>
           </div>
           <h3 className="text-center mt-4 mb-2">Don't have an account yet?</h3>
-          <Link href="/Register">
+          <Link href="/Signup">
             <a className="flex justify-center text-xl border px-2 hover:bg-gray-200">
               Register
             </a>
@@ -96,4 +100,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signin;

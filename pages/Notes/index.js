@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-
+import { useRouter } from "next/router";
 import { UserContext } from "../../context/UserContext";
 import CardComponent from "../../components/CardComponent";
 
 const AllNotes = () => {
-  let user;
+  const router = useRouter();
   const [notes, setNotes] = useState([]);
   const {
     value: { userId },
   } = useContext(UserContext);
 
+  if (!userId) {
+    router.push("/");
+  }
   const getNotes = async () => {
     try {
       const { data } = await axios.get("http://localhost:5000/api/notes/", {

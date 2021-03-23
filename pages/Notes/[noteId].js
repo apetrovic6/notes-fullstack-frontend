@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
+import { UserContext } from "../../context/UserContext";
 
 import axios from "axios";
 
 const NoteId = () => {
+  const {
+    value: { userId },
+  } = useContext(UserContext);
   const router = useRouter();
 
   const { noteId } = router.query;
@@ -16,9 +20,14 @@ const NoteId = () => {
 
   const getNoteDetail = async () => {
     const { data } = await axios.get(
-      `http://localhost:5000/api/notes/${noteId}`
+      `http://localhost:5000/api/notes/${noteId}`,
+      {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      }
     );
+
     setNoteDetail(data);
+    console.log(noteDetail);
   };
 
   useEffect(() => {
@@ -27,7 +36,9 @@ const NoteId = () => {
 
   const onDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/notes/${noteId}`);
+      await axios.delete(`http://localhost:5000/api/notes/${noteId}`, {
+        headers: { "x-auth-token": localStorage.getItem("token") },
+      });
       router.push("/Notes");
     } catch (err) {
       console.log(err);
@@ -36,19 +47,25 @@ const NoteId = () => {
 
   const onEdit = () => {
     setIsEditing(true);
-    setTitle(noteDetail.title);
-    setContent(noteDetail.content);
+    setTitle(noteDetail[0].title);
+    setContent(noteDetail[0].content);
   };
 
   const onUpdate = async () => {
     const updatedNote = { title, content };
-    await axios.put(`http://localhost:5000/api/notes/${noteId}`, updatedNote);
+    await axios.put(`http://localhost:5000/api/notes/${noteId}`, updatedNote, {
+      headers: { "x-auth-token": localStorage.getItem("token") },
+    });
     setIsEditing(false);
     getNoteDetail();
   };
 
   if (!noteDetail) {
     return <div>Loading</div>;
+  }
+
+  if (!userId) {
+    router.push("/");
   }
 
   return (
@@ -63,7 +80,7 @@ const NoteId = () => {
             />
           </h2>
         ) : (
-          <h2 className="">{noteDetail.title}</h2>
+          <h2 className="">{noteDetail[0].title}</h2>
         )}
 
         <div className="">
@@ -100,7 +117,7 @@ const NoteId = () => {
           </div>
         ) : (
           <p className="shadow-lg border my-2 py-2 px-2">
-            {noteDetail.content}
+            {noteDetail[0].content}
           </p>
         )}
       </div>

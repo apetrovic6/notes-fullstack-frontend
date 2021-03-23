@@ -7,6 +7,11 @@ const CreateNote = () => {
   const {
     value: { userId },
   } = useContext(UserContext);
+
+  if (!userId) {
+    router.push("/");
+  }
+
   const onSubmit = (e) => {
     e.preventDefault();
 
