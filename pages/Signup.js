@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import Link from "next/link";
-import axios from "axios";
+
 import { useRouter } from "next/router";
 import { UserContext } from "../context/UserContext";
 import Login from "../utils/Login";
@@ -25,7 +25,7 @@ const Signup = () => {
       <div className="w-screen h-screen flex items-center justify-center ">
         <form onSubmit={onSubmit} className="border shadow-lg py-8 px-8">
           <div className="text-5xl flex text-center ">
-            <h1 className="mx-2  px-2 w-full mx-2 px-2 w-full">Register</h1>
+            <h1 className="mx-2 px-2 w-full">Register</h1>
           </div>
 
           <div className="my-2">
@@ -40,6 +40,9 @@ const Signup = () => {
                 placeholder="Username"
                 onChange={(e) => setUsername(e.target.value)}
                 id="username"
+                required
+                minLength={5}
+                maxLength={20}
               />
             </div>
           </div>
@@ -56,6 +59,9 @@ const Signup = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 id="password"
                 type="password"
+                required
+                minLength={5}
+                maxLength={100}
               />
             </div>
           </div>

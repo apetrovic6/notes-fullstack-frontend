@@ -18,38 +18,16 @@ const Signin = () => {
       password,
     };
     Login(userLogin, setValue);
-
-    // try {
-    //   const response = await axios.post(
-    //     "http://localhost:5000/api/auth/",
-    //     userLogin
-    //   );
-    //   const {
-    //     data: jwt,
-    //     config: { data: user },
-    //   } = response;
-
-    //   const decodedJwt = jwtDecode(jwt);
-    //   const username = JSON.parse(user);
-
-    //   setValue({ userName: username.username, userId: decodedJwt._id });
-
-    //   localStorage.setItem("token", jwt);
-
-    // } catch (err) {
-    //   console.log(err);
-    // }
   };
   if (value.userId) {
     router.replace("/Notes");
   }
   return (
     <div>
-      <h1 className="text-4xl">Login</h1>
       <div className="w-screen h-screen flex items-center justify-center ">
         <form onSubmit={onSubmit} className="border shadow-lg py-8 px-8">
           <div className="text-5xl flex text-center ">
-            <h1 className="mx-2  px-2 w-full mx-2 px-2 w-full">Login</h1>
+            <h1 className="mx-2 px-2 w-full">Login</h1>
           </div>
 
           <div className="my-2">
@@ -64,6 +42,9 @@ const Signin = () => {
                 className="border px-2 mx-2 w-full"
                 placeholder="Username"
                 onChange={(e) => setUsername(e.target.value)}
+                required
+                minLength={1}
+                maxLength={20}
               />
             </div>
           </div>
@@ -80,6 +61,9 @@ const Signin = () => {
                 placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
+                required
+                minLength={5}
+                maxLength={100}
               />
             </div>
           </div>
@@ -90,7 +74,7 @@ const Signin = () => {
           </div>
           <h3 className="text-center mt-4 mb-2">Don't have an account yet?</h3>
           <Link href="/Signup">
-            <a className="flex justify-center text-xl border px-2 hover:bg-gray-200">
+            <a className="flex shadow-md justify-center text-xl border px-2 hover:bg-gray-200">
               Register
             </a>
           </Link>

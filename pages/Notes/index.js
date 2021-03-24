@@ -11,9 +11,6 @@ const AllNotes = () => {
     value: { userId },
   } = useContext(UserContext);
 
-  if (!userId) {
-    router.push("/");
-  }
   const getNotes = async () => {
     try {
       const { data } = await axios.get("http://localhost:5000/api/notes/", {

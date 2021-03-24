@@ -8,10 +8,6 @@ const CreateNote = () => {
     value: { userId },
   } = useContext(UserContext);
 
-  if (!userId) {
-    router.push("/");
-  }
-
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -26,7 +22,7 @@ const CreateNote = () => {
         },
       });
     } catch (error) {
-      console.log(error);
+      console.error.status;
     }
   };
   console.log("From create note page", userId);
@@ -45,6 +41,9 @@ const CreateNote = () => {
             placeholder="Title"
             onChange={(e) => setTitle(e.target.value)}
             className="border shadow-lg w-full py-2 px-2 focus:outline-none"
+            minLength={1}
+            maxLength={100}
+            required
           />
 
           <textarea
@@ -52,6 +51,8 @@ const CreateNote = () => {
             rows="30"
             onChange={(e) => setContent(e.target.value)}
             className="w-full shadow-lg border my-2 py-2 px-2 focus:outline-none"
+            maxLength={10000}
+            required
           />
         </form>
       </div>

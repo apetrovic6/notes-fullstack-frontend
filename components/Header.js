@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 
 const Header = () => {
@@ -11,6 +11,11 @@ const Header = () => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    if (!userName) {
+      router.replace("/");
+    }
+  }, []);
   const onClick = () => {
     localStorage.removeItem("token");
     setValue({});
@@ -30,7 +35,7 @@ const Header = () => {
             </li>
             <li className="mx-2 my-2">
               <Link href="/">
-                <button onClick={onClick}>
+                <button className="focus:outline-none" onClick={onClick}>
                   {userName ? <>Logout</> : <>Login / Register</>}
                 </button>
               </Link>
