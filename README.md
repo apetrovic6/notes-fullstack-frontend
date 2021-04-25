@@ -20,6 +20,11 @@ The user is able to:
 
 - NextJS
 - TailwindCSS
+- NodeJS
+- Express
+- JSON Web Tokens
+- MongoDB
+
 
 ## How to start up the project?
 
