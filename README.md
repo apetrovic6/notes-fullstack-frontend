@@ -9,11 +9,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 The goal of this app was to build a note taking app with basic CRUD functionality.
 The user is able to:
 
-[x] Sign up
-[x] Log In
-[x] Create a new note
-[x] Update a note
-[x] Delete a note
+- [x] Sign up \
+- [x] Log In \
+- [x] Create a new note \
+- [x] Update a note \
+- [x] Delete a note \
 
 
 ## Tech used
